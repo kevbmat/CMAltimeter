@@ -26,6 +26,8 @@ class ViewController: UIViewController {
                 self.altitudeLabel.text = data?.relativeAltitude.stringValue
                 self.pressureLabel.text = data?.pressure.stringValue
             }
+        } else {
+            print("Your iphone doesn't have a barometer :(.")
         }
     }
     

@@ -12,15 +12,25 @@ import CoreMotion
 class ViewController: UIViewController {
 
     @IBOutlet var altitudeLabel: UILabel!
-    var motion = CMMotionManager()
-    var altitude = CMAltimeter()
+    var altitudeManager = CMAltimeter()
+    @IBOutlet var pressureLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
     }
 
-
+    @IBAction func startPressed(_ sender: UIButton) {
+        if CMAltimeter.isRelativeAltitudeAvailable() {
+            altitudeManager.startRelativeAltitudeUpdates(to: OperationQueue.main) { (data, error) in
+                self.altitudeLabel.text = data?.relativeAltitude.stringValue
+                self.pressureLabel.text = data?.pressure.stringValue
+            }
+        }
+    }
+    
+    @IBAction func stopPressed(_ sender: UIButton) {
+        altitudeManager.stopRelativeAltitudeUpdates()
+    }
 }
 
